@@ -169,6 +169,7 @@ ElizaCore.prototype.reassemble = function(ar, msg) {
 }
 
 ElizaCore.prototype.execRule = function(k, input) {
+    //console.log("# key: "+k.word);
     //console.log("# decomp: "+k.decomp.length);
     var rpl = [];
     for (var i = 0; i < k.decomp.length; i++) {
@@ -223,9 +224,11 @@ ElizaCore.prototype.execRule = function(k, input) {
 }
 
 ElizaCore.prototype.execXnone = function(k, input) {
+    //console.log("# key: "+k.word);
     //console.log("# decomp: "+k.decomp.length);
     var rpl = [];
     for (var i = 0; i < k.decomp.length; i++) {
+	//console.log("# decomp["+i+"].pattern: "+k.decomp[i].pattern);
 	if (k.decomp[i].pattern == "*") {
 	    rpl = k.decomp[i].reasmbl[k.decomp[i].curr];
 	    k.decomp[i].curr++; //console.log("# inc 3");
@@ -300,8 +303,10 @@ ElizaCore.prototype.transform = function(text) {
 	    this.mem.shift();
 	} else {
 	    for (var j = 0; j < this.scr.key.length; j++) {
-		if (key != "xnone") continue;
+		if (this.scr.key[j].word != "xnone") continue;
 		//console.log("### xnone");
+		//console.log("# this.scr.key["+j+"].word:"
+		//	    +this.scr.key[j].word);
 		rpl = this.execXnone(this.scr.key[j], text);
 		if (rpl != '') break;
 	    }
